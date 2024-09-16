@@ -1,0 +1,1 @@
+<template>Article Page</template>
