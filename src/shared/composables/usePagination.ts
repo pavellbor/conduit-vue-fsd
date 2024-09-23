@@ -27,11 +27,19 @@ export const usePagination = <T>(
     }
   }
 
+  const reset = () => {
+    data.value = []
+    totalCount.value = 0
+    page.value = 1
+
+    loadData()
+  }
+
   return {
     data,
-    totalCount,
     page,
     totalPages,
-    setPage
+    setPage,
+    reset
   }
 }

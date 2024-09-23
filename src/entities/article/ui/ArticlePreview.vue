@@ -2,8 +2,8 @@
 import { format } from 'date-fns'
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import type { Article } from '@/entities/article'
 import { RoutesPaths } from '@/shared/constants/router'
+import type { Article } from '../model/article.types'
 
 const { article } = defineProps<{
   article: Article

@@ -1,3 +1,1 @@
-import LoginPage from './ui/LoginPage.vue'
-
-export default LoginPage
+export { default } from './ui/LoginPage.vue'

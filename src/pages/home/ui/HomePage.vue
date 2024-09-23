@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import ArticlesFeed from './ArticlesFeed.vue'
-import TagList from './TagList.vue'
+import {
+  ArticleFeed,
+  FeedType,
+  useArticlesFeedStore
+} from '@/features/article/toggle-articles-feed'
+import { TagList } from '@/entities/tag'
+
+const articlesFeedStore = useArticlesFeedStore()
 </script>
 
 <template>
@@ -15,14 +21,13 @@ import TagList from './TagList.vue'
     <div class="container page">
       <div class="row">
         <div class="col-md-9">
-          <ArticlesFeed />
+          <ArticleFeed />
         </div>
 
         <div class="col-md-3">
           <div class="sidebar">
             <p>Popular Tags</p>
-
-            <TagList />
+            <TagList @select-tag="articlesFeedStore.setFeed(FeedType.TAG_FEED, $event)" />
           </div>
         </div>
       </div>
