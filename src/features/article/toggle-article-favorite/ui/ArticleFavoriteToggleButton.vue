@@ -23,10 +23,14 @@ const { favoriteArticle, unfavoriteArticle } = useToggleArticleFavorite({
     v-if="article.favorited"
     :favorites-count="article.favoritesCount"
     @click="unfavoriteArticle"
-  />
-  <FavoriteArticleButton
-    v-else
-    :favorites-count="article.favoritesCount"
-    @click="favoriteArticle"
-  />
+  >
+    <template #default="{ favoritesCount }">
+      <slot name="unfavorite" :favoritesCount="favoritesCount"></slot>
+    </template>
+  </UnfavoriteArticleButton>
+  <FavoriteArticleButton v-else :favorites-count="article.favoritesCount" @click="favoriteArticle">
+    <template #default="{ favoritesCount }">
+      <slot name="favorite" :favoritesCount="favoritesCount"></slot>
+    </template>
+  </FavoriteArticleButton>
 </template>

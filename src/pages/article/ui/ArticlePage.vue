@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ArticleFavoriteToggleButton } from '@/features/article/toggle-article-favorite'
+import { UserFollowToggleButton } from '@/features/user/toggle-user-follow'
 import { ArticleMeta, getArticleApi, type Article } from '@/entities/article'
 import { useApiRequest } from '@/shared/composables/useApiRequest'
-import { RoutesNames } from '@/shared/constants/router'
 
 const props = defineProps<{ slug: string }>()
 
@@ -17,6 +17,19 @@ const getArticle = async () => {
 const { isLoading, executeRequest } = useApiRequest(getArticle)
 
 executeRequest()
+
+const handleArticleFavoriteToggle = ({
+  favorited,
+  favoritesCount
+}: {
+  favorited: boolean
+  favoritesCount: number
+}) => {
+  article.value = Object.assign({}, article.value, { favorited, favoritesCount })
+}
+
+const handleUserFollowToggle = ({ following }: { following: boolean }) =>
+  (article.value!.author.following = following)
 </script>
 
 <template>
@@ -30,21 +43,27 @@ executeRequest()
         <h1>{{ article.title }}</h1>
 
         <ArticleMeta :author="article.author" :created-at="article.createdAt">
-          <button class="btn btn-sm btn-outline-secondary">
-            <i class="ion-plus-round"></i>
-            &nbsp; Follow Eric Simons <span class="counter">(10)</span>
-          </button>
-          &nbsp;&nbsp;
-          <button class="btn btn-sm btn-outline-primary">
-            <i class="ion-heart"></i>
-            &nbsp; Favorite Post <span class="counter">(29)</span>
-          </button>
-          <button class="btn btn-sm btn-outline-secondary">
-            <i class="ion-edit"></i> Edit Article
-          </button>
-          <button class="btn btn-sm btn-outline-danger">
-            <i class="ion-trash-a"></i> Delete Article
-          </button>
+          <template v-if="true">
+            <UserFollowToggleButton :profile="article.author" @toggle="handleUserFollowToggle" />
+            &nbsp;&nbsp;
+            <ArticleFavoriteToggleButton :article="article" @toggle="handleArticleFavoriteToggle">
+              <template #favorite="{ favoritesCount }"
+                >Favorite Post <span class="counter">({{ favoritesCount }})</span></template
+              >
+              <template #unfavorite="{ favoritesCount }"
+                >Unfavorite Post <span class="counter">({{ favoritesCount }})</span></template
+              >
+            </ArticleFavoriteToggleButton>
+          </template>
+          <template v-else>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="ion-edit"></i> Edit Article
+            </button>
+            &nbsp;&nbsp;
+            <button class="btn btn-sm btn-outline-danger">
+              <i class="ion-trash-a"></i> Delete Article
+            </button>
+          </template>
         </ArticleMeta>
       </div>
     </div>
@@ -65,21 +84,27 @@ executeRequest()
 
       <div class="article-actions">
         <ArticleMeta :author="article.author" :created-at="article.createdAt">
-          <button class="btn btn-sm btn-outline-secondary">
-            <i class="ion-plus-round"></i>
-            &nbsp; Follow Eric Simons
-          </button>
-          &nbsp;
-          <button class="btn btn-sm btn-outline-primary">
-            <i class="ion-heart"></i>
-            &nbsp; Favorite Article <span class="counter">(29)</span>
-          </button>
-          <button class="btn btn-sm btn-outline-secondary">
-            <i class="ion-edit"></i> Edit Article
-          </button>
-          <button class="btn btn-sm btn-outline-danger">
-            <i class="ion-trash-a"></i> Delete Article
-          </button>
+          <template v-if="true">
+            <UserFollowToggleButton :profile="article.author" @toggle="handleUserFollowToggle" />
+            &nbsp;&nbsp;
+            <ArticleFavoriteToggleButton :article="article" @toggle="handleArticleFavoriteToggle">
+              <template #favorite="{ favoritesCount }"
+                >Favorite Post <span class="counter">({{ favoritesCount }})</span></template
+              >
+              <template #unfavorite="{ favoritesCount }"
+                >Unfavorite Post <span class="counter">({{ favoritesCount }})</span></template
+              >
+            </ArticleFavoriteToggleButton>
+          </template>
+          <template v-else>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="ion-edit"></i> Edit Article
+            </button>
+            &nbsp;&nbsp;
+            <button class="btn btn-sm btn-outline-danger">
+              <i class="ion-trash-a"></i> Delete Article
+            </button>
+          </template>
         </ArticleMeta>
       </div>
 

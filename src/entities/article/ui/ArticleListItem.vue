@@ -28,7 +28,11 @@ const handleFavoriteToggle = ({
 <template>
   <div class="article-preview">
     <ArticleMeta :author="article.author" :created-at="article.createdAt">
-      <ArticleFavoriteToggleButton :article="article" @toggle="handleFavoriteToggle" />
+      <ArticleFavoriteToggleButton
+        :article="article"
+        class="pull-xs-right"
+        @toggle="handleFavoriteToggle"
+      />
     </ArticleMeta>
     <RouterLink :to="articleLink" class="preview-link">
       <h1>{{ article.title }}</h1>

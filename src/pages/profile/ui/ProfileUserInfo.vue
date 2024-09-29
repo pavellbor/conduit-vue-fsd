@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, onUnmounted, watch } from 'vue'
+import { onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { UserFollowToggleButton } from '@/features/user/toggle-user-follow'
-import { useIsCurrentUser, useSessionStore } from '@/entities/session'
+import { useIsCurrentUser } from '@/entities/session'
 import { useFetchUserProfile, useUserStore } from '@/entities/user'
 import { RoutesNames } from '@/shared/constants/router'
 
@@ -10,7 +10,7 @@ const props = defineProps<{
   username: string
 }>()
 
-const { userProfile, fetchUserProfile } = useFetchUserProfile()
+const { userProfile, fetchUserProfile, updateUserProfile } = useFetchUserProfile()
 const { isCurrentUser } = useIsCurrentUser(props.username)
 const userStore = useUserStore()
 
@@ -25,6 +25,10 @@ onUnmounted(() => userStore.reset())
 const router = useRouter()
 
 const navigateToSettings = () => router.push({ name: RoutesNames.settings })
+
+const handleFollowToggle = ({ following }: { following: boolean }) => {
+  updateUserProfile(Object.assign({}, userProfile.value, { following }))
+}
 </script>
 
 <template>
@@ -43,7 +47,11 @@ const navigateToSettings = () => router.push({ name: RoutesNames.settings })
             <i class="ion-gear-a"></i>
             &nbsp; Edit Profile Settings
           </button>
-          <UserFollowToggleButton v-else-if="userProfile" />
+          <UserFollowToggleButton
+            v-else-if="userProfile"
+            :profile="userProfile"
+            @toggle="handleFollowToggle"
+          />
         </div>
       </div>
     </div>

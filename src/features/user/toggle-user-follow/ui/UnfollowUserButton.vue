@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useToggleUserFollow } from '../model/toggle-user-follow.composable'
-
-const { unfollowUser, username } = useToggleUserFollow()
+defineProps<{ username: string }>()
+defineEmits<{ (e: 'click'): void }>()
 </script>
 
 <template>
-  <button class="btn btn-sm btn-outline-secondary action-btn" @click="unfollowUser">
+  <button class="btn btn-sm btn-secondary action-btn" @click="$emit('click')">
     <i class="ion-plus-round"></i>
     &nbsp; Unfollow {{ username }}
   </button>
