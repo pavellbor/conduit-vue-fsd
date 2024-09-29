@@ -1,7 +1,10 @@
 import { computed, ref, watch } from 'vue'
 
 export const usePagination = <T>(
-  fetchData: (offset: number, limit: number) => Promise<{ data: T[]; totalCount: number }>,
+  fetchData: (
+    offset: number,
+    limit: number
+  ) => Promise<{ data: T[]; totalCount: number } | undefined>,
   perPage = 10
 ) => {
   const data = ref<T[]>([])
@@ -12,9 +15,14 @@ export const usePagination = <T>(
 
   const loadData = async () => {
     const offset = (page.value - 1) * perPage
-    const { data: items, totalCount: count } = await fetchData(offset, perPage)
-    data.value = items
-    totalCount.value = count
+    const response = await fetchData(offset, perPage)
+
+    if (!response) {
+      return
+    }
+
+    data.value = response?.data
+    totalCount.value = response?.totalCount
   }
 
   watch(page, loadData)

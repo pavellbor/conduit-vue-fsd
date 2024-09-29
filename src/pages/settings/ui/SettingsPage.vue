@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAccessLevelRedirect } from '@/features/session/check-session'
 import { useLogout } from '@/features/session/logout'
 import { UserSettingsForm } from '@/features/user/update-user-settings'
+import { useAccessLevelRedirect } from '@/entities/session'
 import UIErrorMessages from '@/shared/ui/UIErrorMessages.vue'
 
 useAccessLevelRedirect()

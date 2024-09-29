@@ -16,24 +16,22 @@ const formatErrorMessages = (error: unknown) => {
   }
 }
 
-export const useApiRequest = () => {
+export const useApiRequest = <T, A extends any[]>(request: (...args: A) => Promise<T>) => {
   const isLoading = ref(false)
   const errorMessages = ref<string[]>([])
 
-  const executeRequest = async <T>(request: () => Promise<T>) => {
-    let result: T | undefined
+  const executeRequest = async (...args: A) => {
     isLoading.value = true
     errorMessages.value = []
 
     try {
-      result = await request()
+      const result = await request(...args)
+      return result
     } catch (error) {
       errorMessages.value = formatErrorMessages(error)
     } finally {
       isLoading.value = false
     }
-
-    return result
   }
 
   return {

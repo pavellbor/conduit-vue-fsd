@@ -10,9 +10,5 @@ const articlesFeedStore = useArticlesFeedStore()
 <template>
   <FeedToggle />
   <ArticlePersonalFeed v-if="articlesFeedStore.feed.type === FeedType.YOUR_FEED" />
-  <ArticleGlobalFeed v-else-if="articlesFeedStore.feed.type === FeedType.GLOBAL_FEED" />
-  <ArticleGlobalFeed
-    v-else-if="articlesFeedStore.feed.type === FeedType.TAG_FEED && articlesFeedStore.feed.payload"
-    :tag="articlesFeedStore.feed.payload"
-  />
+  <ArticleGlobalFeed v-else :filters="{ tag: articlesFeedStore.feed.payload }" />
 </template>

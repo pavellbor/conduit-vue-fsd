@@ -1,5 +1,5 @@
-import type { User } from '@/entities/session'
 import { apiClient } from '@/shared/libs/api-client'
+import type { User } from '../model/session.types'
 
 type GetCurrentUserResponse = {
   user: User

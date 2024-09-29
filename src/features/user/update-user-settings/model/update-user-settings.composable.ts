@@ -12,13 +12,13 @@ type UpdateUserSettingsData = Partial<{
 
 export const useUpdateUserSettings = () => {
   const sessionStore = useSessionStore()
-  const { errorMessages, executeRequest } = useApiRequest()
 
-  const updateUserSettings = async (updateUserSettingsData: UpdateUserSettingsData) =>
-    executeRequest(async () => {
-      const { user } = await updateUserApi(updateUserSettingsData)
-      sessionStore.set({ user })
-    })
+  const updateUserSettings = async (updateUserSettingsData: UpdateUserSettingsData) => {
+    const { user } = await updateUserApi(updateUserSettingsData)
+    sessionStore.set({ user })
+  }
 
-  return { updateUserSettings, errorMessages }
+  const { errorMessages, executeRequest } = useApiRequest(updateUserSettings)
+
+  return { updateUserSettings: executeRequest, errorMessages }
 }

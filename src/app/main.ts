@@ -1,6 +1,6 @@
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-import { useInitSession } from '@/features/session/init-session'
+import { useInitSession } from '@/entities/session'
 import { router } from './providers/router'
 import App from './ui/App.vue'
 
@@ -10,6 +10,6 @@ app.use(createPinia())
 app.use(router)
 
 const { initSession } = useInitSession()
-await initSession()
+initSession()
 
 app.mount('#app')

@@ -53,6 +53,7 @@ const routes: RouteRecordRaw[] = [
     path: `${RoutesPaths.article}/:slug`,
     name: 'article',
     component: () => import('@/pages/article'),
+    props: true,
     meta: {
       accessLevel: 'public'
     }
@@ -61,6 +62,7 @@ const routes: RouteRecordRaw[] = [
     path: `${RoutesPaths.profile}/:username`,
     name: 'profile',
     component: () => import('@/pages/profile'),
+    props: true,
     meta: {
       accessLevel: 'public'
     }

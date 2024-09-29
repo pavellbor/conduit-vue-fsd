@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/libs/api-client'
-import type { Article } from '../model/article.types'
+import type { Article, ArticlePreview } from '../model/article.types'
 
 type ListArticlesRequest = Partial<{
   tag: string
@@ -10,7 +10,7 @@ type ListArticlesRequest = Partial<{
 }>
 
 type ListArticlesResponse = {
-  articles: Article[]
+  articles: ArticlePreview[]
   articlesCount: number
 }
 
@@ -20,20 +20,33 @@ type FeedArticlesRequest = Partial<{
 }>
 
 type FeedArticlesResponse = {
-  articles: Article[]
+  articles: ArticlePreview[]
   articlesCount: number
 }
 
-export const listArticlesApi = async (getArticlesData?: ListArticlesRequest) => {
-  const { data } = await apiClient.get<ListArticlesResponse>('/articles', {
-    params: getArticlesData
-  })
-  return data
+type GetArticleRequest = {
+  slug: string
 }
 
-export const feedArticlesApi = async (getArticlesData?: FeedArticlesRequest) => {
-  const { data } = await apiClient.get<FeedArticlesResponse>('/articles/feed', {
-    params: getArticlesData
+type GetArticleResponse = {
+  article: Article
+}
+
+export const listArticlesApi = async (params?: ListArticlesRequest) => {
+  const response = await apiClient.get<ListArticlesResponse>('/articles', {
+    params
   })
-  return data
+  return response.data
+}
+
+export const feedArticlesApi = async (params?: FeedArticlesRequest) => {
+  const response = await apiClient.get<FeedArticlesResponse>('/articles/feed', {
+    params
+  })
+  return response.data
+}
+
+export const getArticleApi = async ({ slug }: GetArticleRequest) => {
+  const response = await apiClient.get<GetArticleResponse>(`/articles/${slug}`)
+  return response.data
 }

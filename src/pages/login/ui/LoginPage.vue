@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { useAccessLevelRedirect } from '@/features/session/check-session'
 import { LoginForm } from '@/features/session/login'
+import { useAccessLevelRedirect } from '@/entities/session'
 import { RoutesNames } from '@/shared/constants/router'
 import UIErrorMessages from '@/shared/ui/UIErrorMessages.vue'
 
