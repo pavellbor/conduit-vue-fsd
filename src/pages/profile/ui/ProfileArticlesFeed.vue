@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { ArticleGlobalFeed } from '@/entities/article'
+import { computed, h, ref } from 'vue'
+import { ArticleFavoriteToggleButton } from '@/features/article/toggle-article-favorite'
+import { ArticleGlobalFeed, useProvideArticlesDeps, type ArticlePreview } from '@/entities/article'
 import UINavTabs from '@/shared/ui/UINavTabs.vue'
 
 const props = defineProps<{ username: string }>()
@@ -22,6 +23,21 @@ const selectedTab = ref<TabKey>('my-articles')
 const filters = computed(() => {
   const key = selectedTab.value === 'my-articles' ? 'author' : 'favorited'
   return { [key]: props.username }
+})
+
+const renderArticleActions = (
+  article: ArticlePreview,
+  onUpdate: (article: ArticlePreview) => void
+) => {
+  return h(ArticleFavoriteToggleButton, {
+    class: 'pull-xs-right',
+    article,
+    onToggle: ({ favorited, favoritesCount }) => onUpdate({ ...article, favorited, favoritesCount })
+  })
+}
+
+useProvideArticlesDeps({
+  renderArticleActions
 })
 </script>
 

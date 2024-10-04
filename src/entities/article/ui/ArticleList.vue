@@ -15,7 +15,6 @@ const areArticlesEmpty = computed(() => props.articles.length === 0)
 
 defineEmits<{
   (e: 'pageChange', newPage: number): void
-  (e: 'updateItem', value: ArticlePreview): void
 }>()
 </script>
 
@@ -25,12 +24,11 @@ defineEmits<{
   <div v-else-if="areArticlesEmpty" class="article-preview">No articles are here... yet.</div>
 
   <template v-else>
-    <ArticleListItem
-      v-for="article in articles"
-      :article="article"
-      :key="article.slug"
-      @update="$emit('updateItem', $event)"
-    />
+    <ArticleListItem v-for="article in articles" :article="article" :key="article.slug">
+      <template #actions="{ article }">
+        <slot name="articleActions" :article="article"></slot>
+      </template>
+    </ArticleListItem>
 
     <UIPagination
       :current-page="currentPage"

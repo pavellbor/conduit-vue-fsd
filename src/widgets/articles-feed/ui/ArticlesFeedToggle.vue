@@ -3,8 +3,8 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '@/entities/session'
 import { RoutesNames } from '@/shared/constants/router'
-import { useArticlesFeedStore } from '../model/toggle-articles-feed.store'
-import { FeedType, type Feed } from '../model/toggle-articles-feed.type'
+import { useArticlesFeedStore } from '../model/articles-feed.store'
+import { FeedType, type Feed } from '../model/articles-feed.type'
 
 const sessionStore = useSessionStore()
 const articlesFeedStore = useArticlesFeedStore()

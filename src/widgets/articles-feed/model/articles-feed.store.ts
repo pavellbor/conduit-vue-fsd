@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
-import { FeedType } from './toggle-articles-feed.type'
+import { FeedType } from './articles-feed.type'
 
 export const useArticlesFeedStore = defineStore('articlesFeed', () => {
   const feed = reactive<{

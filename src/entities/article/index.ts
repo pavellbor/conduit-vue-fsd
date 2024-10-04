@@ -1,3 +1,4 @@
+export { useProvideArticlesDeps, useArticles } from './model/article.composables'
 export { default as ArticleMeta } from './ui/ArticleMeta.vue'
 export { default as ArticlePersonalFeed } from './ui/ArticlePersonalFeed.vue'
 export { default as ArticleGlobalFeed } from './ui/ArticleGlobalFeed.vue'

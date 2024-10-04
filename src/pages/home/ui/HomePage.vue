@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  ArticleFeed,
-  FeedType,
-  useArticlesFeedStore
-} from '@/features/article/toggle-articles-feed'
+import { ArticleFeed, FeedType, useArticlesFeedStore } from '@/widgets/articles-feed'
 import { TagList } from '@/entities/tag'
 
 const articlesFeedStore = useArticlesFeedStore()
